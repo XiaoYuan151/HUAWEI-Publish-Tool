@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Media;
 using System.Net;
 using System.Windows.Forms;
 
@@ -49,15 +48,15 @@ namespace HUAWEI_Publish_Tool
         {
             this.BackColor = Color.Red;
             checkBox1.Enabled = false;
-            SoundPlayer player = new SoundPlayer();
+            //File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\HUAWEI.WAV");
+            //File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\본체!.MP4");
             if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\HUAWEI.WAV"))
                 HttpDownloadFile("https://oss.xiaoyuan151.top/raw/Song%20of%20the%20Korean%20People's%20Army.wav", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\HUAWEI.WAV");
-            player.SoundLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\HUAWEI.WAV";
-            player.Load();
-            player.PlayLooping();
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\본체!.MP4"))
+                HttpDownloadFile("https://oss.xiaoyuan151.top/raw/%E3%80%90P1%E3%80%91%E6%9C%9D%E9%B2%9C%E6%B0%91%E4%B8%BB%E4%B8%BB%E4%B9%89%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B8%87%E5%B2%81%EF%BC%81.mp4", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\본체!.MP4");
             MessageBox.Show("동료! 화웨이의 친절은 끝이 없습니다!\n同志！华为的恩情是还不完的！", "렌정페이", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-            Form newForm = new Form2();
-            newForm.ShowDialog();
+            new Form2(this).Show();
+            this.Hide();
         }
 
         public static string HttpDownloadFile(string url, string path)
